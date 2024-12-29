@@ -1,0 +1,8 @@
+POST /login HTTP/1.1
+Host: localhost:3000
+Content-Type: application/json
+Content-Length: 195
+
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXIiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MzU0NzMwMzYsImV4cCI6MTczNTQ3NjYzNn0.fVq8By3nArPNjXLoE3GzOZA5OM9sQYgbqEMuceiQDgM"
+}
