@@ -1,0 +1,40 @@
+const jwt = require('jsonwebtoken');
+const express = require('express');
+const app = express();
+
+const SECRET_KEY = 'virat'; // Secret key for signing tokens
+
+// Sample token creation (to simulate an existing token)
+const sampleToken = jwt.sign({ username: 'user', role: 'user' }, SECRET_KEY, { expiresIn: '1h' });
+console.log(`token: ${sampleToken}`);
+
+app.use(express.json());
+
+// Secure endpoint: Verify JWT and validate username
+app.post('/login', (req, res) => {
+    const token = req.body.token;
+
+    try {
+        // Verify the token
+        const decoded = jwt.verify(token, SECRET_KEY);
+
+        // Ensure the username exists and is valid
+        if (decoded.username && typeof decoded.username === 'string') {
+            if (decoded.role === 'admin') {
+                res.send(`Welcome, ${decoded.username}. You are an admin.`);
+            } else {
+                res.send(`Welcome, ${decoded.username}. You are a regular user.`);
+            }
+        } else {
+            res.status(400).send('Invalid username in token.');
+        }
+    } catch (err) {
+        // Handle invalid or expired token
+        res.status(401).send('Invalid or expired token.');
+    }
+});
+
+// Start the server
+app.listen(3000, () => {
+    console.log('Server running on http://localhost:3000');
+});
